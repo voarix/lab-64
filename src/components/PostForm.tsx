@@ -58,6 +58,7 @@ const PostForm : React.FC<Props>  = ({ isEdit = false, onSubmitAdd}) => {
                   required
                   value={form.message}
                   name="message"
+                  id="message"
                   onChange={onChangeInputMessage}></textarea>
                 <button type="submit" className="btn btn-primary mt-3">
                   {isEdit ? 'Edit' : 'Add'}
