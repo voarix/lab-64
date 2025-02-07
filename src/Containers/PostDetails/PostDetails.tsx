@@ -7,20 +7,20 @@ import Loader from "../../UI/Loader.tsx";
 const PostDetails = () => {
   const [loading, setLoading] = useState(false);
   const [postDetails, setPostDetails] = useState<IPostForm>();
-  const params = useParams() as {idPost: string};
+  const {idPost} = useParams();
   const navigate = useNavigate();
 
   const fetchData = useCallback( async () => {
     try{
       setLoading(true);
-      const response = await axiosApi<IPostForm>(`posts/${params.idPost}.json`);
+      const response = await axiosApi<IPostForm>(`posts/${idPost}.json`);
       setPostDetails(response.data);
     } catch(error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [params.idPost]);
+  }, [idPost]);
 
   useEffect(() => {
     void fetchData();
@@ -47,7 +47,7 @@ const PostDetails = () => {
             </h5>
             <hr/>
             <p className="fs-4">{postDetails.message}</p>
-            <button className='btn btn-primary' onClick={() => navigate(`/posts/${params.idPost}/edit`)}>Edit</button>
+            <button className='btn btn-primary' onClick={() => navigate(`/posts/${idPost}/edit`)}>Edit</button>
             <button className='btn btn-primary ms-4'>Delete</button>
           </div>
         </div>
