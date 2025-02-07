@@ -42,13 +42,13 @@ const Home = () => {
 
   if (loading) content = (<Loader/>);
 
-  if (!loading && posts.length > 0) {
+  if (!loading) {
     if (posts.length > 0) {
       content = (
         <>
           {posts.map((post) => (
             <div key={post.id}>
-              <PostItem time={post.time} title={post.title}/>
+              <PostItem post={post} />
             </div>
           ))}
         </>
