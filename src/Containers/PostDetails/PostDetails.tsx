@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import axiosApi from "../../axiosApi.ts";
 import { IPostForm } from "../../types";
 import Loader from "../../UI/Loader.tsx";
+import { toast } from "react-toastify";
 
 const PostDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ const PostDetails = () => {
     } catch(error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      setLoading(false );
     }
   }, [idPost]);
 
@@ -26,10 +27,20 @@ const PostDetails = () => {
     void fetchData();
   }, [fetchData]);
 
+
+  const onDeletePost = async () => {
+    try {
+      await axiosApi.delete(`posts/${idPost}.json`);
+      toast.success("Post was successfully deleted");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete post");
+    }
+  };
+
   let content = null;
-
   if (loading) content = (<Loader/>);
-
   if (!loading && !postDetails) {
     content = <p>Post details not found</p>;
   }
@@ -48,7 +59,7 @@ const PostDetails = () => {
             <hr/>
             <p className="fs-4">{postDetails.message}</p>
             <button className='btn btn-primary' onClick={() => navigate(`/posts/${idPost}/edit`)}>Edit</button>
-            <button className='btn btn-primary ms-4'>Delete</button>
+            <button className='btn btn-primary ms-4' onClick={onDeletePost}>Delete</button>
           </div>
         </div>
       </>

@@ -39,9 +39,7 @@ const Home = () => {
   }, [fetchData]);
 
   let content = null;
-
   if (loading) content = (<Loader/>);
-
   if (!loading) {
     if (posts.length > 0) {
       content = (
